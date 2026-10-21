@@ -42,7 +42,7 @@ if user_input := st.chat_input("Tulis keluh kesah atau obrolan lu di sini, Bro..
     try:
         chat_full_prompt = f"{system_instruction}\n\nUser: {user_input}"
         response = client.models.generate_content(
-            model='gemini-1.5-flash',
+            model='gemini-3.8-flash',
             contents=chat_full_prompt,
         )
         ai_reply = response.text
