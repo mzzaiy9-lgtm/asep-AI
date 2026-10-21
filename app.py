@@ -13,7 +13,8 @@ st.title("🤖 Asep AI - Asisten Santai")
 st.write("Sini cerita bro, aman-aman semua. Ada apa hari lu?")
 
 # Inisialisasi API Client Gemini (Ganti dengan API Key lu)
-client = genai.Client(api_key="MASUKKAN_API_KEY_GOOGLE_AI_STUDIO_LU_DISINI")
+klien = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+
 
 # Sistem instruksi karakter Asep AI
 system_instruction = """
