@@ -12,14 +12,17 @@ st.set_page_config(
 st.title("🤖 Asep AI - Asisten Santai")
 st.write("Sini cerita bro, aman-aman semua. Ada apa hari lu?")
 
-# Inisialisasi API Client Gemini (Ganti dengan API Key lu)
-client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-
+# Inisialisasi Client Gemini dengan Streamlit Secrets yang aman
+try:
+    client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+except Exception as e:
+    st.error(f"Waduh Bro, API Key-nya belum diset dengan benar di Secrets: {e}")
+    st.stop()
 
 # Sistem instruksi karakter Asep AI
 system_instruction = """
-Lu adalah Asep AI, asisten virtual yang ramah, santai, pakai gaya bahasa gaul 
-seperti 'bro', 'woles', 'gaskeun', dan akrab banget sama pengguna. 
+Lu adalah Asep AI, asisten virtual yang ramah, santai, menggunakan gaya bahasa gaul 
+seperti 'bro', 'woles', 'gaskeun', dan akrab banget sama pengguna.
 Tapi tetap bantu jawab pertanyaan atau keluh kesah mereka dengan solutif.
 """
 
@@ -38,11 +41,13 @@ if user_input := st.chat_input("Tulis keluh kesah atau obrolan lu di sini, Bro..
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # Kirim ke model Gemini
+    # Kirim ke model Gemini menggunakan SDK google-genai terbaru
     try:
         chat_full_prompt = f"{system_instruction}\n\nUser: {user_input}"
+        
+        # Menggunakan model standar gemini-2.5-flash yang kompatibel
         response = client.models.generate_content(
-            model='gemini-1.5-flash',
+            model='gemini-2.5-flash',
             contents=chat_full_prompt,
         )
         ai_reply = response.text
