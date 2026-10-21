@@ -41,13 +41,13 @@ if user_input := st.chat_input("Tulis keluh kesah atau obrolan lu di sini, Bro..
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # Kirim ke model Gemini menggunakan SDK google-genai terbaru
+    # Kirim ke model Gemini menggunakan format model standar SDK terbaru
     try:
         chat_full_prompt = f"{system_instruction}\n\nUser: {user_input}"
         
-        # Menggunakan gemini-1.5-flash versi stabil
+        # Menggunakan format model gemini-2.0-flash yang didukung penuh
         response = client.models.generate_content(
-            model='gemini-1.5-flash',
+            model='gemini-2.0-flash',
             contents=chat_full_prompt,
         )
         ai_reply = response.text
